@@ -1,24 +1,6 @@
 <style>
     .steps { display: none }
 </style>
-<script>
-/* Start of Help Popup Modular Script*/
-$( document ).ready(function() {
-
-  $("*[data-toggle=tooltip]").tooltip();
-
-  $(".help_popup_a").click(function(event){
-    event.preventDefault();
-    $(".help_popup_description",$(this).parent()).toggle();
-    if($(".help_popup_description",$(this).parent()).css("display")=="block") {
-      $(this).html("Hide the help!");
-    } else
-      $(this).html("Get some help");
-  });
-
-});
-/* End of Help Popup Modular Script*/
-</script>
 <div class="row skeleton">
     <div id="area0" class="col-xs-6">
         <!-- Questionary -->
@@ -238,7 +220,7 @@ $( document ).ready(function() {
                 <input type="checkbox" value="moving"  ><label for="moving">&nbsp;&nbsp;The animal is moving away from or approaching a person</label><br>
 
                 <button class="step_3 btn btn-answer btn-success" value='Done'><i class="fa fa-white"></i> Done</button>
-                <button class="step_3 btn btn-answer"             value=''><i class="fa fa-white"></i> I can't tell</button>
+                <button class="step_3 btn btn-answer"             value='Uncertain'><i class="fa fa-white"></i> I can't tell</button>
             </div>
         </div>
         <!-- End Step 3 -->
@@ -289,7 +271,7 @@ $( document ).ready(function() {
                 <input type="checkbox" value="alone"     ><label for="alone">&nbsp;&nbsp;The animal is alone or seperate from its herd</label><br>
 
                 <button class="step_4 btn btn-answer btn-success" value='Done'><i class="fa fa-white"></i> Done</button>
-                <button class="step_4 btn btn-answer"             value=''><i class="fa fa-white"></i> I can't tell</button>
+                <button class="step_4 btn btn-answer"             value='Uncertain'><i class="fa fa-white"></i> I can't tell</button>
             </div>
         </div>
         <!-- End Step 4 -->
@@ -306,44 +288,37 @@ $( document ).ready(function() {
             <button class="back btn btn-answer" style="display:none;"><i class="fa fa-chevron-left"></i> Go to previous step</button>
         </div>
     </div>
-    <!--<div id="img-details" class="col-xs-4">-->
-        <!-- Collapse -->
-        <!--<div class="accordion" id="accordion2">
-            <div class="accordion-group">
-                <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                       EXIF data
-                    </a>
-                </div>
-                <div id="collapseOne" class="accordion-body collapse in">
-                    <div id="exif" class="accordion-inner">
-                        This picture does not have any EXIF data.
-                    </div>
-                </div>
-            </div>
-        </div>-->
-        <!-- End collapse -->
-        <!--</div>-->
-    <div id="area1" class="col-xs-6">
-        <div class="col-xs-12" id="photo-link">
-            <img id="photo" src="http://i.imgur.com/GeHxzb7.png" style="max-width=100%">
-        </div>
-        <div class="col-xs-12" style="margin-top:10px;">
-            <a href="javascript:zoomin()" class="btn btn-primary">Zoom IN</a>
-              &nbsp;|&nbsp;
-              <a href="javascript:zoomout()"  class="btn btn-primary">Zoom OUT</a>
-              &nbsp;|&nbsp;
-              <a id="img_source" target="_blank" href="#"  class="btn btn-primary">View Photo Source</a>
-        </div>
-    </div>
-</div><!-- End of Skeleton Row -->
+
+
+
+
+
+	<link type="text/css" src="https://raw.githubusercontent.com/spMohanty/Magnifier.js/master/magnifier.css"/>
+	<div id="image" class="col-xs-6 affix-top"><!-- The image to analyze. -->
+		<div class="row">
+			<div class="col-xs-12" style="margin-top:10px;">
+				<a id="img_source" target="_blank" href="#" class="btn btn-primary">View Photo Source</a>
+				<br>
+				Hover over the image to zoom, use the mouse scroll wheel to zoom in and out (<a target="_blank" href="http://mark-rolich.github.io/Magnifier.js/">Magnifier.js</a>)
+			</div>
+			<div style="margin: 0 auto">
+				<a class="magnifier-thumb-wrapper demo col-xs-12">
+					<img style="width:100%" id="thumb" src="http://i.imgur.com/GeHxzb7.png">
+				</a>
+			</div>
+			<div class="magnifier-preview col-xs-12" style="height: 300px" id="preview"></div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Success and Error Messages for the user -->
 <div class="row">
-    <!-- Success and Error Messages for the user -->
-    <div class="col-xs-6 offset2" style="height:50px">
-        <div id="success" class="alert alert-success" style="display:none;">
-            <a class="close">×</a>
-            <strong>Well done!</strong> Your answer has been saved
-        </div>
+	<div class="col-xs-6 col-xs-offset-2" style="height:50px">
+		<div id="success" class="alert alert-success" style="display:none;">
+			<a class="close">×</a>
+			<strong>Well done!</strong> Your answer has been saved
+		</div>
         <div id="loading" class="alert alert-info" style="display:none;">
             <a class="close">×</a>
             Loading next task...
@@ -351,286 +326,309 @@ $( document ).ready(function() {
         <div id="taskcompleted" class="alert alert-info" style="display:none;">
             <strong>The task has been completed!</strong> Thanks a lot!
         </div>
-        <div id="finish" class="alert alert-warning" style="display:none;">
-            <p>There are no tasks available at the moment to classify. However, you can help by installing <a href="https://dl.dropboxusercontent.com/u/27667029/geotag-x.xpi">the following Firefox extension</a> and submitting some images to analyze them here. Thanks in advance!</p>
-            <br/>
-            <div class="alert-actions">
-                <a class="btn small" href="/">Go back</a>
-                <a class="btn small" href="/app">or, Check other applications</a>
-            </div>
-        </div>
-        <div id="error" class="alert alert-error" style="display:none;">
-            <a class="close">×</a>
-            <strong>Error!</strong> Something went wrong, please contact the site administrators
-        </div>
-    </div> <!-- End Success and Error Messages for the user -->
-</div> <!-- End of Row -->
+		<div id="finish" class="alert alert-success" style="display:none;">
+			<strong>Congratulations!</strong> You have participated in all available tasks!
+			<br>
+			<div class="alert-actions">
+				<a class="btn small" href="/">Go back</a>
+				<a class="btn small" href="/app">or, Check other applications</a>
+			</div>
+		</div>
+		<div id="error" class="alert alert-error" style="display:none;">
+			<a class="close">×</a>
+			<strong>Error!</strong> Something went wrong, please contact the site administrators
+		</div>
+    </div>
+</div>
+
+<!--
+<script src="/static/js/geotagx.js"></script>
+<script src="/static/js/vendor/Event.js"></script>
+<script src="/static/js/vendor/Magnifier.js"></script>
+-->
+<script src="/static/js/pybossa/Event.js"></script>
+<script src="/static/js/pybossa/Magnifier.js"></script>
 <script>
+var geotagx = (function(){
+	// The number of steps in this task.
+	var taskStepCount_ = 0;
 
-function zoomin(){
-    //$("#area0").removeClass("col-xs-6");
-    $("#area1").removeClass("col-xs-6");
-    //$("#area0").addClass("col-xs-12");
-    $("#area1").addClass("col-xs-12");
-}
+	$(document).ready(function(){
+		// Toggle help when the appropriate button is pressed.
+		$("*[data-toggle=tooltip]").tooltip();
+		$(".help_popup_a").click(function(e){
+			e.preventDefault();
 
-function zoomout() {
-    //$("#area0").removeClass("col-xs-12");
-    $("#area1").removeClass("col-xs-12");
-    //$("#area0").addClass("col-xs-6");
-    $("#area1").addClass("col-xs-6");
-}
+			var $help = $(this);
+			var $parent = $help.parent();
 
-// Concatenates a set of <input> values into a single string.
-function inputsToString(inputs){
-    var result = "";
-    inputs.each(function(){
-        result += "," + $(this).val();
-    });
-    return result.substring(1); // Return the concatenated string, without the leading comma.
-}
+			$(".help_popup_description", $parent).toggle();
+			$help.html($(".help_popup_description", $parent).css("display") === "block" ? "Hide the help." : "Get some help!");
+		});
 
-pybossa.taskLoaded(function(task, deferred) {
-    if ( ! $.isEmptyObject(task) ) {
-        // load image from flickr
-        var img = $('<img />');
-        img.load(function() {
-            // continue as soon as the image is loaded
-            deferred.resolve(task);
-        });
-        img.attr('src', task.info.url);
-        img.attr('id', 'anno_' + task.id);
-        img.addClass('img-polaroid');
-        img.addClass('annotable');
-        task.info.image = img;
-        // Initiate answer with default values
-        task.steps = [0];
-        task.answer = {
-            "img":task.info.url,
-            "task_id":task.id,
-            "animals":"",
-            "animalSpecies":"",
-            "animalAlive":"",
-            "animalGoodHealthIndicators":"",
-            "animalPoorHealthIndicators":"",
-        };
-    }
-    else {
-        deferred.resolve(task);
-    }
-});
+		// Determine the number of steps in this task (including the spam filter and last step).
+		taskStepCount_ = $(".steps").length;
+	});
 
-pybossa.presentTask(function(task, deferred) {
-    if ( !$.isEmptyObject(task) ) {
-        $('#photo-link').html('').append(task.info.image);
-        //$("#question").html(task.info.question);
-        $('#task-id').html(task.id);
-        $("#img_source").attr("href", task.info.uri);
-        //$("#uri").attr("href", task.info.uri);
-        $(".back").hide();
+	// Return an API for use in template files.
+	return {
+		/*
+		 * Initializes the pybossa.taskLoaded and pybossa.presentTask functions.
+		 */
+		initialize:function(initialResult, submissionHandler){
+			pybossa.taskLoaded(function(task, deferred){
+				if (!$.isEmptyObject(task)){
+					// load image from flickr
+					var img = $('<img />');
+					img.load(function(){
+						// continue as soon as the image is loaded
+						deferred.resolve(task);
+					});
+					img.attr('src', task.info.url);
+					img.attr('id', 'anno_' + task.id);
+					img.addClass('img-polaroid');
+					img.addClass('annotable');
 
-        // Hide all steps first
-        $(".steps").hide();
-        // Show first step
-        $("#step_relevant_filter").show();
-        // Reset input fields
-        //$("#n_stories").val(0);
+					// Initialize the task data structure.
+					task.info.image = img;
 
-        $('.btn-answer').off('click').on('click', function(evt) {
-            // Get value of pressed button
-            var tmp = $(evt.target).attr("value");
+					// Set the initial task step.
+					task.steps = [0];
 
-      // PAGINATION
-
-      var pag_max_steps = $(".steps").length;
-      var pag_n_steps = $(".steps").index($(".steps:visible"));
-      var pag_perc=(((pag_n_steps+1)/(pag_max_steps-1))*100).toFixed(0);
-      $("#progress_bar_task").css("width",pag_perc+"%");
-      $("#progress_bar_task").html(pag_perc+"%");
-
-      // PAGINATION
-
-      // Check if step is the photo filter
-            if ($(evt.target).hasClass('step_relevant_filter')) {
-
-                $(".steps").hide();
-                if (tmp == "No") {
-                    //alert("DB: Yes");
-                    $("#step_0").show();
-
-                    }
-                else {
-                  //alert("DB: No ajax");
-                  /*$.ajax({
-            url: url + 'api/filter/' + taskid +'/no',
-            dataType: 'json'
-          });*/
-                  $("#progress_bar_task").css("width","100%");
-          $("#progress_bar_task").html("100%");
-                    $("#last_step").show();
-                }
-            }
-
-            // Check if step is 0
-            if ($(evt.target).hasClass('step_0')) {
-                task.answer.animals = tmp;
-                $(".steps").hide();
-                if (tmp == "Yes") {
-                    task.steps.push(1);
-                    $("#step_1").show();
-                    $(".back").show();
-                }
-                else {
-                    $("#last_step").show();
-                }
-            }
-
-            // Check if step is 1 (determining animal species).
-            if ($(evt.target).hasClass("step_1")){
-                // For this step, we can have a listed or unlisted answer. In the latter case, the answer is
-                // stored in the 'animal_other' input field and not as the button value.
-                if ($(evt.target).attr("id") === "animal_other_button")
-                    tmp = $("#animal_other").val().trim();
-
-                // Only store a valid answer.
-                if (!!tmp){
-                    task.answer.animalSpecies = tmp;
-                    $(".steps").hide();
-                    task.steps.push(2);
-                    $("#step_2").show();
-                }
-            }
-
-            // Check if step is 2
-            if ($(evt.target).hasClass('step_2')) {
-                task.answer.animalAlive = tmp;
-                $(".steps").hide();
-                if (tmp != 'Dead') {
-                    task.steps.push(3);
-                    $("#step_3").show();
-                }
-                else {
-                    $("#last_step").show();
-                }
-            }
-
-            // Check if step is 3 (indicators of good health).
-            if ($(evt.target).hasClass("step_3")){
-                // If the 'Done' button was pressed, then the answer is obtained from the checked inputs. If, on the other hand,
-                // the "I can't tell" button is pressed, the answer is stored in the button's value attribute.
-                if (tmp === "Done")
-                    tmp = inputsToString($("#step_3_answer input:checked"));
-
-                task.answer.animalGoodHealthIndicators = tmp;
-
-                $(".steps").hide();
-                task.steps.push(4);
-                $("#step_4").show();
-            }
-
-            // Check if step is 4 (indicators of poor health).
-            if ($(evt.target).hasClass("step_4")){
-                if (tmp === "Done")
-                    tmp = inputsToString($("#step_3_answer input:checked"));
-
-                task.answer.animalPoorHealthIndicators = tmp;
-
-                $(".steps").hide();
-                $("#last_step").show();
-            }
-
-            // Check if step is last
-            if ($(evt.target).hasClass('last_step')) {
-                zoomout();
-
-        // +FC Added answer and help-popup reset
-                $(".help_popup_description").css("display","none");
-                $("input:checkbox").removeAttr("checked");
-        // -FC Added answer and help-popup reset
-
-                pybossa.saveTask(task.id, task.answer).done(function() {
-                deferred.resolve();
-                })
-            }
-
-            // Check if back button is pressed
-            if ($(evt.target).hasClass('back')) {
-                console.log(JSON.stringify(task.steps));
-                zoomout();
-                $("#last_step").hide();
-                var last_step = task.steps.pop();
-                var id = "#step_" + last_step.toString();
-                var prev_id = "#step_" + task.steps[task.steps.length - 1];
-                $(id).hide();
-                $(prev_id).show();
-                if (prev_id == "#step_0") {
-                    $(".back").hide();
-                    task.steps = [0];
-                }
-
-               /* if ((prev_id == "#step_9") || (prev_id == "#step_11") || (prev_id == '#step_14') || (prev_id == '#step_15')) {
-                    anno.reset();
-                    $("#crack_category").hide();
-                    $("#crack_rebars").hide();
-                    $("#crack_rebars").hide();
-                    $("#damage_category").hide();
-                    $("#answer").hide();
-                }*/
-
-                console.log(JSON.stringify(task.steps));
-            }
-            // print answer on console
-            // console.log(JSON.stringify(task.answer));
-        });
+					// Set initial results.
+					task.answer = {"img":task.info.url, "task_id":task.id };
+					for (var property in initialResult)
+						task.answer[property] = initialResult[property];
+				}
+				else
+					deferred.resolve(task);
+			});
 
 
-        //$("#btn-submit").html("<i class='fa-repeat'></i> I don't recognize any person, try next one");
-        //$("#btn-submit").removeClass("btn-success");
-        //if (!$.isEmptyObject(task.info.exif)) {
-        //    //var keys = Object.keys(task.info.exif);
-        //    //$("#exif").html("");
-        //    //for(i=0;i<keys.length;i++){
-        //    //$("#exif").append("<p><strong>" + keys[i] + "</strong>: " + task.info.exif[keys[i]] + "</p>");
-        //    //}
-        //    $("#exif").html(JSON.stringify(task.info.exif));
-        //}
-        //else {
-        //    $("#exif").html("There is no EXIF data in this picture.");
-        //}
+			pybossa.presentTask(function(task, deferred){
+				if (!$.isEmptyObject(task)){
+					$('#photo-link').html('').append(task.info.image);
+					$('#task-id').html(task.id);
 
-        //anno.makeAnnotatable(document.getElementById('anno_' + task.id));
+					var magnifier = new Magnifier(new Event());
+					magnifier.attach({
+						thumb:'#thumb',
+						large:task.info.url,
+						largeWrapper:'preview',
+						mode:'inside',
+						zoom:5,
+						zoomable:true
+					});
 
-        //anno.addHandler('onAnnotationCreated', function(annotation) {
-        //    //console.log(annotation.text);
-        //    $("#btn-submit").html("<i class='fa fa-save'></i> Save current annotations");
-        //    $("#btn-submit").addClass("btn-success");
-        //});
+					//console.log(task.info);
+					//console.log(magnifier);
 
-        //$('.btn-answer').off('click').on('click', function(evt) {
-        //    var answer = $(evt.target).attr("value");
-        //    if (typeof answer != 'undefined') {
-        //        //console.log(answer);
-        //        pybossa.saveTask(task.id, anno.getAnnotations()).done(function() {
-        //            deferred.resolve();
-        //        });
-        //        $("#loading").fadeIn(500);
-        //        if ($("#disqus_thread").is(":visible")) {
-        //            $('#disqus_thread').toggle();
-        //            $('.btn-disqus').toggle();
-        //        }
-        //    }
-        //    else {
-        //        $("#error").show();
-        //    }
-        //});
-        $("#loading").hide();
-    }
-    else {
-        $(".skeleton").hide();
-        $("#loading").hide();
-        $("#finish").fadeIn(500);
-    }
-});
+					$("#img_source").attr("href", task.info.uri);
+					$("#thumb").attr("src", task.info.url);
+					// $("#preview").html("");
+					// $("#preview").css({'height':($("#photo-link").height()+'px')});
+					// $("#preview").css({'width':($("#photo-link").width()+'px')});
 
-pybossa.run('animals');
+					$(".back").hide();
+
+					// Hide all steps and show the task filter.
+					$(".steps").hide();
+					$("#step_relevant_filter").show();
+
+					// Handle submissions.
+					$(".btn-answer").off("click").on("click", function(){
+						var $button = $(this);
+						var  answer = $button.attr("value");
+
+						// Task filter.
+						if ($button.hasClass("step_relevant_filter")){
+							$(".steps").hide();
+
+							if (answer === "No"){
+								//alert("DB: Yes");
+								$("#step_0").show();
+							}
+							else {
+								//alert("DB: No ajax");
+								//$.ajax({
+								//url: url + 'api/filter/' + taskid +'/no',
+								//dataType: 'json'
+								//});
+								geotagx.util.setTaskProgress(100);
+								$("#last_step").show();
+							}
+						}
+						// Have we reached the final step? If so, submit the results.
+						else if ($button.hasClass("last_step")){
+							// +FC Added answer and help-popup reset
+							$(".help_popup_description").css("display","none");
+							$("input:checkbox").removeAttr("checked");
+							// -FC Added answer and help-popup reset
+
+							//console.log(task.answer);
+
+							pybossa.saveTask(task.id, task.answer).done(function(){
+								deferred.resolve();
+							});
+						}
+						// Has the 'back' button been pressed?
+						else if ($button.hasClass("back")){
+							//console.log(JSON.stringify(task.steps));
+							$("#last_step").hide();
+							var last_step = task.steps.pop();
+							var id = "#step_" + last_step.toString();
+							var prev_id = "#step_" + task.steps[task.steps.length - 1];
+							$(id).hide();
+							$(prev_id).show();
+							if (prev_id == "#step_0") {
+								$(".back").hide();
+								task.steps = [0];
+							}
+							//console.log(JSON.stringify(task.steps));
+
+							// print answer on console
+							// console.log(JSON.stringify(task.answer));
+						}
+						else
+							submissionHandler(task, $button, answer);
+
+
+						// Update the progress bar.
+						var currentStep = task.steps[task.steps.length - 1];
+						geotagx.util.setTaskProgress(((currentStep / taskStepCount_) * 100).toFixed(0));
+
+						console.log(task.steps + ": " + (currentStep + 1) + "/" + taskStepCount_);
+					});
+
+					$("#loading").hide();
+				}
+				else {
+					$(".skeleton").hide();
+					$("#loading").hide();
+					$("#finish").fadeIn(500);
+				}
+			});
+		},
+		/*
+		 * Runs the GeoTag-X application task.
+		 */
+		run:function(application, category){
+			pybossa.run(application);
+		},
+		/*
+		 * A set of utility functions.
+		 */
+		util:{
+			/*
+			 * Forms a string from values contained in a set of <input> elements.
+			 */
+			inputsToString:function(inputs){
+				var result = "";
+				inputs.each(function(){
+					result += "," + $(this).val();
+				});
+				return result.substring(1); // Return the concatenated string, without the leading comma.
+			},
+			/*
+			 * Updates the progress bar.
+			 */
+			setTaskProgress:function(percentage){
+				$("#progress_bar_task").css("width", percentage + "%");
+				$("#progress_bar_task").html(percentage + "%");
+			},
+			/*
+			 * Loads disqus comments.
+			 */
+			loadDisqus:function(){
+				$("#disqus_thread").toggle();
+				$(".btn-disqus").toggle();
+
+				var disqus_shortname = 'geotagx'; (function(){var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true; dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);})();
+			}
+		}
+	};
+})();
+</script>
+<script>
+var initialResult = {
+	"animals":"",
+	"animalSpecies":"",
+	"animalAlive":"",
+	"animalGoodHealthIndicators":"",
+	"animalPoorHealthIndicators":"",
+};
+
+
+function submissionHandler(task, $button, answer){
+	// Check if step is 0
+	if ($button.hasClass('step_0')){
+		task.answer.animals = answer;
+		$(".steps").hide();
+		if (answer == "Yes"){
+			task.steps.push(1);
+			$("#step_1").show();
+			$(".back").show();
+		}
+		else {
+			$("#last_step").show();
+		}
+	}
+
+	// Check if step is 1 (determining animal species).
+	if ($button.hasClass("step_1")){
+		// For this step, we can have a listed or unlisted answer. In the latter case, the answer is
+		// stored in the 'animal_other' input field and not as the button value.
+		if ($button.attr("id") === "animal_other_button")
+			answer = $("#animal_other").val().trim();
+
+		// Only store a valid answer.
+		if (!!answer){
+			task.answer.animalSpecies = answer;
+			$(".steps").hide();
+			task.steps.push(2);
+			$("#step_2").show();
+		}
+	}
+
+	// Check if step is 2
+	if ($button.hasClass('step_2')) {
+		task.answer.animalAlive = answer;
+		$(".steps").hide();
+		if (answer !== 'Dead') {
+			task.steps.push(3);
+			$("#step_3").show();
+		}
+		else
+			$("#last_step").show();
+	}
+
+	// Check if step is 3 (indicators of good health).
+	if ($button.hasClass("step_3")){
+		// If the 'Done' button was pressed, then the answer is obtained from the checked inputs. If, on the other hand,
+		// the "I can't tell" button is pressed, the answer is stored in the button's value attribute.
+		if (answer === "Done")
+			answer = geotagx.util.inputsToString($("#step_3_answer input:checked"));
+
+		task.answer.animalGoodHealthIndicators = answer;
+
+		$(".steps").hide();
+		task.steps.push(4);
+		$("#step_4").show();
+	}
+
+	// Check if step is 4 (indicators of poor health).
+	if ($button.hasClass("step_4")){
+		if (answer === "Done")
+			answer = geotagx.util.inputsToString($("#step_4_answer input:checked"));
+
+		task.answer.animalPoorHealthIndicators = answer;
+
+		$(".steps").hide();
+		$("#last_step").show();
+	}
+};
+
+
+geotagx.initialize(initialResult, submissionHandler);
+geotagx.run("animals", "somalidrought");
 </script>
