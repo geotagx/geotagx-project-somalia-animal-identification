@@ -151,7 +151,7 @@
                     <li class="col-xs-4">
                         <div class="thumbnail">
                             <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Vraagteken.svg/200px-Vraagteken.svg.png" style="width: 50%; height: 50%">
-                            <button data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Did you read the Get Some Help section?" class="step_0 btn btn-answer" value='Unknown'><i class="fa fa-white fa-question-sign"></i> I don't know</button>
+                            <button class="step_1 btn btn-answer" value='Unknown' data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Did you read the Get Some Help section?"><i class="fa fa-white fa-question-sign"></i> I don't know</button>
                         </div>
                     </li>
                 </ul>
@@ -193,8 +193,8 @@
                 </div>
             </div>
             <div id="step_2_answer">
-                <button class="step_2 btn btn-answer" value='Alive'>Alive</button>
-                <button class="step_2 btn btn-answer" value='Dead'>Dead</button>
+                <button class="step_2 btn btn-answer" value='Yes'>Alive</button>
+                <button class="step_2 btn btn-answer" value='No'>Dead</button>
                 <button class="step_2 btn btn-answer" value='NotClear'><i class="fa fa-white"></i> It's not clear</button>
                 <button class="step_2 btn btn-answer" value='Unknown' data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Did you read the Get Some Help section?"><i class="fa fa-white fa-question-sign"></i> I don't know</button>
             </div>
@@ -291,8 +291,6 @@
 
 
 
-
-
 	<link type="text/css" src="https://raw.githubusercontent.com/spMohanty/Magnifier.js/master/magnifier.css"/>
 	<div id="image" class="col-xs-6 affix-top"><!-- The image to analyze. -->
 		<div class="row">
@@ -340,295 +338,74 @@
 		</div>
     </div>
 </div>
-
-<!--
 <script src="/static/js/geotagx.js"></script>
-<script src="/static/js/vendor/Event.js"></script>
-<script src="/static/js/vendor/Magnifier.js"></script>
--->
 <script src="/static/js/pybossa/Event.js"></script>
 <script src="/static/js/pybossa/Magnifier.js"></script>
 <script>
-var geotagx = (function(){
-	// The number of steps in this task.
-	var taskStepCount_ = 0;
+    // Set the task's initial result.
+    geotagx.task.result = {
+        "animals":"",
+    	"animalSpecies":"",
+    	"animalAlive":"",
+    	"animalGoodHealthIndicators":"",
+    	"animalPoorHealthIndicators":"",
+    };
 
-	$(document).ready(function(){
-		// Toggle help when the appropriate button is pressed.
-		$("*[data-toggle=tooltip]").tooltip();
-		$(".help_popup_a").click(function(e){
-			e.preventDefault();
+    // Set the result submission handler.
+    geotagx.task.onSubmitResult = function(submission, $submitter){
+        // Check if step is 0, i.e. determining whether or not the image has any domestic animals in it.
+        if ($submitter.hasClass("step_0")){
+            geotagx.task.result.animals = submission;
+            if (submission === "Yes")
+                geotagx.task.showNextStep();
+            else
+                geotagx.task.showLastStep(); // If the image doesn't contain any domestic animals, skip to the last step.
+        }
 
-			var $help = $(this);
-			var $parent = $help.parent();
+        // Check if step is 1, i.e. determining the animal species.
+    	if ($submitter.hasClass("step_1")){
+    		// For this step, we can have a listed or unlisted answer. In the latter case, the answer is
+    		// stored in the 'animal_other' input field and not as the button value.
+    		if ($submitter.attr("id") === "animal_other_button")
+    			submission = $("#animal_other").val().trim();
 
-			$(".help_popup_description", $parent).toggle();
-			$help.html($(".help_popup_description", $parent).css("display") === "block" ? "Hide the help." : "Get some help!");
-		});
+    		// Only store a valid submission.
+    		if (!!submission){
+    			geotagx.task.result.animalSpecies = submission;
+                geotagx.task.showNextStep();
+    		}
+    	}
 
-		// Determine the number of steps in this task (including the spam filter and last step).
-		taskStepCount_ = $(".steps").length;
-	});
+    	// Check if step is 2, i.e. determining whether or not the animal is alive.
+    	if ($submitter.hasClass('step_2')) {
+    		geotagx.task.result.animalAlive = submission;
+            if (submission === "Yes")
+                geotagx.task.showNextStep();
+            else
+                geotagx.task.showLastStep(); // If the animal is not alive, skip to the last step.
+    	}
 
-	// Return an API for use in template files.
-	return {
-		/*
-		 * Initializes the pybossa.taskLoaded and pybossa.presentTask functions.
-		 */
-		initialize:function(initialResult, submissionHandler){
-			pybossa.taskLoaded(function(task, deferred){
-				if (!$.isEmptyObject(task)){
-					// load image from flickr
-					var img = $('<img />');
-					img.load(function(){
-						// continue as soon as the image is loaded
-						deferred.resolve(task);
-					});
-					img.attr('src', task.info.url);
-					img.attr('id', 'anno_' + task.id);
-					img.addClass('img-polaroid');
-					img.addClass('annotable');
+    	// Check if step is 3 (indicators of good health).
+    	if ($submitter.hasClass("step_3")){
+    		// If the 'Done' button was pressed, then the answer is obtained from the checked inputs. If, on the other hand,
+    		// the "I can't tell" button is pressed, the answer is stored in the button's value attribute.
+    		if (submission === "Done")
+            submission = geotagx.util.inputsToString($("#step_3_answer input:checked"));
 
-					// Initialize the task data structure.
-					task.info.image = img;
+    		geotagx.task.result.animalGoodHealthIndicators = submission;
+            geotagx.task.showNextStep();
+    	}
 
-					// Set the initial task step.
-					task.steps = [0];
+    	// Check if step is 4 (indicators of poor health).
+    	if ($submitter.hasClass("step_4")){
+    		if (submission === "Done")
+    			submission = geotagx.util.inputsToString($("#step_4_answer input:checked"));
 
-					// Set initial results.
-					task.answer = {"img":task.info.url, "task_id":task.id };
-					for (var property in initialResult)
-						task.answer[property] = initialResult[property];
-				}
-				else
-					deferred.resolve(task);
-			});
+            geotagx.task.result.animalPoorHealthIndicators = submission;
+            geotagx.task.showNextStep();
+    	}
+    };
 
-
-			pybossa.presentTask(function(task, deferred){
-				if (!$.isEmptyObject(task)){
-					$('#photo-link').html('').append(task.info.image);
-					$('#task-id').html(task.id);
-
-					var magnifier = new Magnifier(new Event());
-					magnifier.attach({
-						thumb:'#thumb',
-						large:task.info.url,
-						largeWrapper:'preview',
-						mode:'inside',
-						zoom:5,
-						zoomable:true
-					});
-
-					//console.log(task.info);
-					//console.log(magnifier);
-
-					$("#img_source").attr("href", task.info.uri);
-					$("#thumb").attr("src", task.info.url);
-					// $("#preview").html("");
-					// $("#preview").css({'height':($("#photo-link").height()+'px')});
-					// $("#preview").css({'width':($("#photo-link").width()+'px')});
-
-					$(".back").hide();
-
-					// Hide all steps and show the task filter.
-					$(".steps").hide();
-					$("#step_relevant_filter").show();
-
-					// Handle submissions.
-					$(".btn-answer").off("click").on("click", function(){
-						var $button = $(this);
-						var  answer = $button.attr("value");
-
-						// Task filter.
-						if ($button.hasClass("step_relevant_filter")){
-							$(".steps").hide();
-
-							if (answer === "No"){
-								//alert("DB: Yes");
-								$("#step_0").show();
-							}
-							else {
-								//alert("DB: No ajax");
-								//$.ajax({
-								//url: url + 'api/filter/' + taskid +'/no',
-								//dataType: 'json'
-								//});
-								geotagx.util.setTaskProgress(100);
-								$("#last_step").show();
-							}
-						}
-						// Have we reached the final step? If so, submit the results.
-						else if ($button.hasClass("last_step")){
-							// +FC Added answer and help-popup reset
-							$(".help_popup_description").css("display","none");
-							$("input:checkbox").removeAttr("checked");
-							// -FC Added answer and help-popup reset
-
-							//console.log(task.answer);
-
-							pybossa.saveTask(task.id, task.answer).done(function(){
-								deferred.resolve();
-							});
-						}
-						// Has the 'back' button been pressed?
-						else if ($button.hasClass("back")){
-							//console.log(JSON.stringify(task.steps));
-							$("#last_step").hide();
-							var last_step = task.steps.pop();
-							var id = "#step_" + last_step.toString();
-							var prev_id = "#step_" + task.steps[task.steps.length - 1];
-							$(id).hide();
-							$(prev_id).show();
-							if (prev_id == "#step_0") {
-								$(".back").hide();
-								task.steps = [0];
-							}
-							//console.log(JSON.stringify(task.steps));
-
-							// print answer on console
-							// console.log(JSON.stringify(task.answer));
-						}
-						else
-							submissionHandler(task, $button, answer);
-
-
-						// Update the progress bar.
-						var currentStep = task.steps[task.steps.length - 1];
-						geotagx.util.setTaskProgress(((currentStep / taskStepCount_) * 100).toFixed(0));
-
-						console.log(task.steps + ": " + (currentStep + 1) + "/" + taskStepCount_);
-					});
-
-					$("#loading").hide();
-				}
-				else {
-					$(".skeleton").hide();
-					$("#loading").hide();
-					$("#finish").fadeIn(500);
-				}
-			});
-		},
-		/*
-		 * Runs the GeoTag-X application task.
-		 */
-		run:function(application, category){
-			pybossa.run(application);
-		},
-		/*
-		 * A set of utility functions.
-		 */
-		util:{
-			/*
-			 * Forms a string from values contained in a set of <input> elements.
-			 */
-			inputsToString:function(inputs){
-				var result = "";
-				inputs.each(function(){
-					result += "," + $(this).val();
-				});
-				return result.substring(1); // Return the concatenated string, without the leading comma.
-			},
-			/*
-			 * Updates the progress bar.
-			 */
-			setTaskProgress:function(percentage){
-				$("#progress_bar_task").css("width", percentage + "%");
-				$("#progress_bar_task").html(percentage + "%");
-			},
-			/*
-			 * Loads disqus comments.
-			 */
-			loadDisqus:function(){
-				$("#disqus_thread").toggle();
-				$(".btn-disqus").toggle();
-
-				var disqus_shortname = 'geotagx'; (function(){var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true; dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);})();
-			}
-		}
-	};
-})();
-</script>
-<script>
-var initialResult = {
-	"animals":"",
-	"animalSpecies":"",
-	"animalAlive":"",
-	"animalGoodHealthIndicators":"",
-	"animalPoorHealthIndicators":"",
-};
-
-
-function submissionHandler(task, $button, answer){
-	// Check if step is 0
-	if ($button.hasClass('step_0')){
-		task.answer.animals = answer;
-		$(".steps").hide();
-		if (answer == "Yes"){
-			task.steps.push(1);
-			$("#step_1").show();
-			$(".back").show();
-		}
-		else {
-			$("#last_step").show();
-		}
-	}
-
-	// Check if step is 1 (determining animal species).
-	if ($button.hasClass("step_1")){
-		// For this step, we can have a listed or unlisted answer. In the latter case, the answer is
-		// stored in the 'animal_other' input field and not as the button value.
-		if ($button.attr("id") === "animal_other_button")
-			answer = $("#animal_other").val().trim();
-
-		// Only store a valid answer.
-		if (!!answer){
-			task.answer.animalSpecies = answer;
-			$(".steps").hide();
-			task.steps.push(2);
-			$("#step_2").show();
-		}
-	}
-
-	// Check if step is 2
-	if ($button.hasClass('step_2')) {
-		task.answer.animalAlive = answer;
-		$(".steps").hide();
-		if (answer !== 'Dead') {
-			task.steps.push(3);
-			$("#step_3").show();
-		}
-		else
-			$("#last_step").show();
-	}
-
-	// Check if step is 3 (indicators of good health).
-	if ($button.hasClass("step_3")){
-		// If the 'Done' button was pressed, then the answer is obtained from the checked inputs. If, on the other hand,
-		// the "I can't tell" button is pressed, the answer is stored in the button's value attribute.
-		if (answer === "Done")
-			answer = geotagx.util.inputsToString($("#step_3_answer input:checked"));
-
-		task.answer.animalGoodHealthIndicators = answer;
-
-		$(".steps").hide();
-		task.steps.push(4);
-		$("#step_4").show();
-	}
-
-	// Check if step is 4 (indicators of poor health).
-	if ($button.hasClass("step_4")){
-		if (answer === "Done")
-			answer = geotagx.util.inputsToString($("#step_4_answer input:checked"));
-
-		task.answer.animalPoorHealthIndicators = answer;
-
-		$(".steps").hide();
-		$("#last_step").show();
-	}
-};
-
-
-geotagx.initialize(initialResult, submissionHandler);
-geotagx.run("animals", "somalidrought");
+    // Run the application.
+    geotagx.task.run("animals");
 </script>
