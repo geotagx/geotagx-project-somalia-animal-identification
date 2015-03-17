@@ -343,70 +343,52 @@
 <script src="/static/js/pybossa/Event.js"></script>
 <script src="/static/js/pybossa/Magnifier.js"></script>
 <script>
-    // Set the task's initial result.
-    geotagx.task.result = {
-        "animals":"",
-    	"animalSpecies":"",
-    	"animalAlive":"",
-    	"animalGoodHealthIndicators":"",
-    	"animalPoorHealthIndicators":"",
-    };
+// Assigns a result field to a step number.
+geotagx.task.setResultMap({
+    0:"animals",
+    1:"animalSpecies",
+    2:"animalAlive",
+    3:"animalGoodHealthIndicators",
+    4:"animalPoorHealthIndicators",
+});
 
-    // Set the result submission handler.
-    geotagx.task.onSubmitResult = function(submission, $submitter){
-        // Check if step is 0, i.e. determining whether or not the image has any domestic animals in it.
-        if ($submitter.hasClass("step_0")){
-            geotagx.task.result.animals = submission;
+// Set the result submission handler.
+geotagx.task.onSubmitResult = function(submission, $submitter){
+    var currentStep = geotagx.task.currentStep();
+    switch (currentStep){
+        case 0: // Determine whether or not there're domestic animals in the image.
+        case 2: // Determine whether or not the animal is alive.
+            geotagx.task.saveResult(submission);
             if (submission === "Yes")
                 geotagx.task.showNextStep();
             else
-                geotagx.task.showLastStep(); // If the image doesn't contain any domestic animals, skip to the last step.
-        }
+                geotagx.task.showLastStep(); // If the image doesn't contain any animals that are domestic or alive, skip to the last step.
+            break;
+        case 1:
+            // For this step, we can have a listed or unlisted answer. In the latter case, the answer is
+            // stored in the 'animal_other' input field and not as the button value.
+            if ($submitter.attr("id") === "animal_other_button")
+                submission = $("#animal_other").val().trim();
 
-        // Check if step is 1, i.e. determining the animal species.
-    	if ($submitter.hasClass("step_1")){
-    		// For this step, we can have a listed or unlisted answer. In the latter case, the answer is
-    		// stored in the 'animal_other' input field and not as the button value.
-    		if ($submitter.attr("id") === "animal_other_button")
-    			submission = $("#animal_other").val().trim();
-
-    		// Only store a valid submission.
-    		if (!!submission){
-    			geotagx.task.result.animalSpecies = submission;
+            // Only store a valid answer.
+            if (!!submission){
+                geotagx.task.saveResult(submission);
                 geotagx.task.showNextStep();
-    		}
-    	}
+            }
+            break;
+        case 3: // Determine indicators of good health.
+        case 4: // Determine indicators of poor health.
+            if (submission === "Done")
+                submission = geotagx.util.inputsToString($submitter.siblings("input:checked"));
 
-    	// Check if step is 2, i.e. determining whether or not the animal is alive.
-    	if ($submitter.hasClass('step_2')) {
-    		geotagx.task.result.animalAlive = submission;
-            if (submission === "Yes")
-                geotagx.task.showNextStep();
-            else
-                geotagx.task.showLastStep(); // If the animal is not alive, skip to the last step.
-    	}
-
-    	// Check if step is 3 (indicators of good health).
-    	if ($submitter.hasClass("step_3")){
-    		// If the 'Done' button was pressed, then the answer is obtained from the checked inputs. If, on the other hand,
-    		// the "I can't tell" button is pressed, the answer is stored in the button's value attribute.
-    		if (submission === "Done")
-            submission = geotagx.util.inputsToString($("#step_3_answer input:checked"));
-
-    		geotagx.task.result.animalGoodHealthIndicators = submission;
+            geotagx.task.saveResult(submission);
             geotagx.task.showNextStep();
-    	}
+            break;
+        default:
+            break;
+    }
+};
 
-    	// Check if step is 4 (indicators of poor health).
-    	if ($submitter.hasClass("step_4")){
-    		if (submission === "Done")
-    			submission = geotagx.util.inputsToString($("#step_4_answer input:checked"));
-
-            geotagx.task.result.animalPoorHealthIndicators = submission;
-            geotagx.task.showNextStep();
-    	}
-    };
-
-    // Run the application.
-    geotagx.task.run("animals", "animals");
+// Run the application.
+geotagx.task.run("animals", "animals");
 </script>
