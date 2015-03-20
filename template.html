@@ -1,27 +1,38 @@
-<style>
-    .steps { display: none }
-</style>
-<div class="row skeleton">
-    <div id="area0" class="col-xs-6">
-        <!-- Questionary -->
-        <!-- Step -1 -->
-        <div id="step_relevant_filter" class="steps">
-            <h1>Is this photo spam?</h1>
-            <p>Sometimes, people collecting photos might accidentally send something not useful, like an advertisement.</p>
-            <p>If this photo is an advertisement or similar you should choose "Spam"</p>
-            <p>Selecting "Spam" will skip this photo</p>
-            <p>Selecting "Not Spam" or "I don't know" will allow you to go ahead with the analysis</p>
-            <p>If you are not sure, select "I don't know"</p>
-            <div id="step_relevant_filter_answer">
-                <button class="step_relevant_filter btn btn-answer btn-danger"  value='Yes'><i class="fa fa-white fa-thumbs-down"></i> Spam</button>
-                <button class="step_relevant_filter btn btn-answer btn-success" value='No'><i class="fa fa-white fa-thumbs-up"></i> Not Spam</button>
-                <button class="step_relevant_filter btn btn-answer"             value='NoPhoto'><i class="fa fa-white fa-exclamation"></i> No photo</button>
-                <button class="step_relevant_filter btn btn-answer"             value='Unknown'><i class="fa fa-white fa-question-sign"></i> I don't know</button>
+<link rel="stylesheet" href="/static/css/template.css">
+<div class="row alerts"><!-- Success and error messages. -->
+    <div id="alerts-column" class="col-md-6 col-md-offset-2">
+        <div id="success"       class="alert alert-success"><strong id="i18n_welldone">Well done!</strong> <span id="i18n_welldone_text">Your answer has been saved.</span><a class="close">×</a></div>
+        <div id="loading"       class="alert alert-info"><span id="i18n_loading_next_task">Loading next task...</span><a class="close">×</a></div>
+        <div id="taskcompleted" class="alert alert-info"><strong id="i18n_task_completed">The task has been completed!</strong> <span id="i18n_thanks">Thanks a lot!</span></div>
+        <div id="finish"        class="alert alert-success"><strong id="i18n_congratulations">Congratulations!</strong> <span id="i18n_congratulations_text">You have participated in all available tasks!</span><br>
+            <div class="alert-actions">
+                <a class="btn small" href="/">Go back</a>
+                <a class="btn small" href="/app">or, Check other projects</a>
             </div>
         </div>
-        <!-- End Step -1 -->
-        <!-- Step 0 -->
-        <div id="step_0" class="steps">
+        <div id="error" class="alert alert-danger"><strong>Error!</strong> Something went wrong, please contact the site administrators<a class="close">×</a></div>
+    </div>
+</div>
+<div class="row skeleton"><!-- Skeleton row. -->
+    <section id="questionnaire" class="col-xs-6"><!-- The questions to answer. -->
+        <div id="questionnaire-filter" class="question"><!-- The questionnaire's spam filter -->
+			<h1>Is this photo spam?</h1>
+			<p>Sometimes, people collecting photos might accidentally send something not useful, like an advertisement.</p>
+			<p>If this photo is an advertisement or similar you should choose "Spam" and it will be skipped.</p>
+			<p>Selecting "Not Spam" or "I don't know" will allow you to go ahead with the analysis.</p>
+			<p>If you are not sure, select "I don't know"</p>
+			<div id="questionnaire-filter-answer">
+    			<button class="questionnaire-filter btn btn-answer btn-danger"  value='Yes'><i class="fa fa-white fa-thumbs-down"></i> Spam</button>
+    			<button class="questionnaire-filter btn btn-answer btn-success" value='No'><i class="fa fa-white fa-thumbs-up"></i> Not Spam</button>
+    			<button class="questionnaire-filter btn btn-answer"             value='NoPhoto'><i class="fa fa-white fa-exclamation"></i> No photo</button>
+    			<button class="questionnaire-filter btn btn-answer"             value='Unknown'><i class="fa fa-white fa-question-sign"></i> I don't know</button>
+			</div>
+		</div>
+
+
+        <!-- Begin questions. -->
+        <!-- Question 0. -->
+        <div id="questionnaire-question-0" class="question">
             <h1>Do you see domestic animals in this photo?</h1>
             <div class="row help_popup col-xs-12">
                 <i class="fa fa-exclamation-circle"></i> How do I answer this question? <a class="help_popup_a" href="javascript:void(0)">Get some help</a>
@@ -54,16 +65,16 @@
                     </div>
                 </div>
             </div>
-            <div id="step_0_answer">
-                <button class="step_0 btn btn-answer btn-success" value='Yes'><i class="fa fa-white fa-thumbs-up"></i> Yes</button>
-                <button class="step_0 btn btn-answer btn-danger"  value='No'><i class="fa fa-white fa-thumbs-down"></i> No</button>
-                <button class="step_0 btn btn-answer"             value='NotClear'><i class="fa fa-white"></i> It's not clear</button>
-                <button class="step_0 btn btn-answer"             value='Unknown' data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Did you read the Get Some Help section?"><i class="fa fa-white fa-question-sign"></i> I don't know</button>
+            <div id="questionnaire-question-0-answer">
+                <button class="questionnaire-question-0 btn btn-answer btn-success" value='Yes'><i class="fa fa-white fa-thumbs-up"></i> Yes</button>
+                <button class="questionnaire-question-0 btn btn-answer btn-danger"  value='No'><i class="fa fa-white fa-thumbs-down"></i> No</button>
+                <button class="questionnaire-question-0 btn btn-answer"             value='NotClear'><i class="fa fa-white"></i> It's not clear</button>
+                <button class="questionnaire-question-0 btn btn-answer"             value='Unknown' data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Did you read the Get Some Help section?"><i class="fa fa-white fa-question-sign"></i> I don't know</button>
             </div>
         </div>
-        <!-- End Step 0 -->
-        <!-- Step 1 -->
-        <div id="step_1" class="steps">
+        <!-- End question 0. -->
+        <!-- Question 1. -->
+        <div id="questionnaire-question-1" class="question">
             <h1>What is the animal you are looking at?</h1>
             <p>Hint: search the internet to find pictures that will help you id what you are seeing in the photo, you can use the links under each suggested species to start</p>
             <div class="row help_popup col-xs-12">
@@ -79,13 +90,13 @@
                 </div>
             </div>
             <p>&nbsp;</p>
-            <div id="step_1_answer">
+            <div id="questionnaire-question-1-answer">
                 <ul class="thumbnails">
                     <li class="col-xs-4">
                         <div class="thumbnail">
                             <img src="http://www.interservicos.com/media/uploads/3n.png">
                             <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="http://www.interservicos.com/index.php/en/projectos/detail/306/">Interservicos</a></p>
-                            <button class="step_1 btn btn-answer" value='Cattle'>Cattle</button>
+                            <button class="questionnaire-question-1 btn btn-answer" value='Cattle'>Cattle</button>
                         </div>
                         <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="https://www.google.com/#q=cattle+africa">Get more examples</a></p>
                     </li>
@@ -93,7 +104,7 @@
                         <div class="thumbnail">
                             <img src="http://www.animalcorner.co.uk/wildlife/camels/graphics/cameldrom.jpg">
                             <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="http://www.animalcorner.co.uk/wildlife/camels/camel_dromedary.html">Animal Corner</a></p>
-                            <button class="step_1 btn btn-answer" value='Camel'>Camel</button>
+                            <button class="questionnaire-question-1 btn btn-answer" value='Camel'>Camel</button>
                         </div>
                         <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="https://www.google.com/#q=camel">Get more examples</a></p>
                     </li>
@@ -101,7 +112,7 @@
                         <div class="thumbnail">
                             <img src="http://40.media.tumblr.com/cf2d20197662f0a7f92bab14eb172f5e/tumblr_muk62bEGmk1r34z06o1_1280.jpg">
                             <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="http://www.ourafricablog.com/post/63820121729/nomadamsterdam-somali-horses-having-fun-at">Our Africa Blog</a></p>
-                            <button class="step_1 btn btn-answer" value='Horse'>Horse</button>
+                            <button class="questionnaire-question-1 btn btn-answer" value='Horse'>Horse</button>
                         </div>
                         <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="https://www.google.com/#q=horse">Get more examples</a></p>
                     </li>
@@ -109,7 +120,7 @@
                         <div class="thumbnail">
                             <img src="http://media-cache-ec0.pinimg.com/236x/cd/44/16/cd44162bd06893707689624f33314daf.jpg">
                             <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="http://www.colouredsheep.org.nz/">colouredsheep.org.nz</a></p>
-                            <button class="step_1 btn btn-answer" value='Sheep'>Sheep</button>
+                            <button class="questionnaire-question-1 btn btn-answer" value='Sheep'>Sheep</button>
                         </div>
                         <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="https://www.google.com/#q=sheep+africa">Get more examples</a></p>
                     </li>
@@ -117,7 +128,7 @@
                         <div class="thumbnail">
                             <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Innocence_%283426318415%29.jpg/301px-Innocence_%283426318415%29.jpg">
                             <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="http://www.flickr.com/photos/adavey/3426318415/">Innocence</a></p>
-                            <button class="step_1 btn btn-answer" value='Donkey'>Donkey</button>
+                            <button class="questionnaire-question-1 btn btn-answer" value='Donkey'>Donkey</button>
                         </div>
                         <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="https://www.google.com/#q=donkey">Get more examples</a></p>
                     </li>
@@ -125,7 +136,7 @@
                         <div class="thumbnail">
                             <img src="http://capda.org.au/wp-content/uploads/2013/10/DSC09840-960x640.jpg">
                             <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="http://capda.org.au/goat-and-chicken-raising-projects/">CAPDA</a></p>
-                            <button class="step_1 btn btn-answer" value='Donkey'>Goat</button>
+                            <button class="questionnaire-question-1 btn btn-answer" value='Donkey'>Goat</button>
                         </div>
                         <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="https://www.google.com/#q=goat">Get more examples</a></p>
                     </li>
@@ -135,7 +146,7 @@
                         <div class="thumbnail">
                             <img src="http://markwatkinson.zenfolio.com/img/s3/v40/p357350409-3.jpg">
                             <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="http://markwatkinson.zenfolio.com/p709151464/h154CBC09#h154cbc09">Mark W. Atkinson</a></p>
-                            <button class="step_1 btn btn-answer" value='Poultry'>Oxen</button>
+                            <button class="questionnaire-question-1 btn btn-answer" value='Poultry'>Oxen</button>
                         </div>
                         <p style="font-size:10px;"><i class="fa fa-picture"></i> <a target="_blank" href="https://www.google.com/#q=ox">Get more examples</a></p>
                     </li>
@@ -145,13 +156,13 @@
                             <p><span class="label label-info"><i class="fa fa-bullhorn"></i></span>Not in the list? Type your identification here. Try searching the web to identify what you are looking at.</p>
                             <input id="animal_other" type="text" name="animal_other">
                             <br>
-                            <button id="animal_other_button" class="button step_1 btn btn-answer">Done</button>
+                            <button id="animal_other_button" class="button questionnaire-question-1 btn btn-answer">Done</button>
                         </div>
                     </li>
                     <li class="col-xs-4">
                         <div class="thumbnail">
                             <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Vraagteken.svg/200px-Vraagteken.svg.png" style="width: 50%; height: 50%">
-                            <button class="step_1 btn btn-answer" value='Unknown' data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Did you read the Get Some Help section?"><i class="fa fa-white fa-question-sign"></i> I don't know</button>
+                            <button class="questionnaire-question-1 btn btn-answer" value='Unknown' data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Did you read the Get Some Help section?"><i class="fa fa-white fa-question-sign"></i> I don't know</button>
                         </div>
                     </li>
                 </ul>
@@ -159,9 +170,9 @@
                 <p>&nbsp;</p>
             </div>
         </div>
-        <!-- End Step 1 -->
-        <!-- Step 2 -->
-        <div id="step_2" class="steps">
+        <!-- End question 1. -->
+        <!-- Question 2. -->
+        <div id="questionnaire-question-2" class="question">
             <h1>Is the animal alive or dead?</h1>
             <div class="row help_popup col-xs-12">
                 <i class="fa fa-exclamation-circle"></i>How do I answer this question? <a class="help_popup_a" href="javascript:void(0)">Get some help</a>
@@ -192,16 +203,16 @@
                     </div>
                 </div>
             </div>
-            <div id="step_2_answer">
-                <button class="step_2 btn btn-answer" value='Yes'>Alive</button>
-                <button class="step_2 btn btn-answer" value='No'>Dead</button>
-                <button class="step_2 btn btn-answer" value='NotClear'><i class="fa fa-white"></i> It's not clear</button>
-                <button class="step_2 btn btn-answer" value='Unknown' data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Did you read the Get Some Help section?"><i class="fa fa-white fa-question-sign"></i> I don't know</button>
+            <div id="questionnaire-question-2-answer">
+                <button class="questionnaire-question-2 btn btn-answer" value='Yes'>Alive</button>
+                <button class="questionnaire-question-2 btn btn-answer" value='No'>Dead</button>
+                <button class="questionnaire-question-2 btn btn-answer" value='NotClear'><i class="fa fa-white"></i> It's not clear</button>
+                <button class="questionnaire-question-2 btn btn-answer" value='Unknown' data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Did you read the Get Some Help section?"><i class="fa fa-white fa-question-sign"></i> I don't know</button>
             </div>
         </div>
-        <!-- End Step 2 -->
-        <!--Step 3-->
-        <div id="step_3" class="steps">
+        <!-- End question 2. -->
+        <!-- Question 3. -->
+        <div id="questionnaire-question-3" class="question">
             <h1>Indicators of good health:</h1>
             <div class="row help_popup col-xs-13">
                 <i class="fa fa-exclamation-circle"></i>How do I answer this question? <a class="help_popup_a" href="javascript:void(0)">Get some help</a>
@@ -210,7 +221,7 @@
                     <p>In this question we are asking you to look for some of these indicators of good health.</p>
                 </div>
             </div>
-            <div id="step_3_answer">
+            <div id="questionnaire-question-3-answer">
                 <input type="checkbox" value="playing" ><label for="playing">&nbsp;&nbsp;The animal is running and/or playing</label><br>
                 <input type="checkbox" value="eating"  ><label for="eating">&nbsp;&nbsp;The animal is eating and/or drinking</label><br>
                 <input type="checkbox" value="grooming"><label for="grooming">&nbsp;&nbsp;The animal is grooming itself</label> <br>
@@ -219,13 +230,13 @@
                 <input type="checkbox" value="alert"   ><label for="alert">&nbsp;&nbsp;The animal has bright eyes, its head is up and it looks alert</label><br>
                 <input type="checkbox" value="moving"  ><label for="moving">&nbsp;&nbsp;The animal is moving away from or approaching a person</label><br>
 
-                <button class="step_3 btn btn-answer btn-success" value='Done'><i class="fa fa-white"></i> Done</button>
-                <button class="step_3 btn btn-answer"             value='Uncertain'><i class="fa fa-white"></i> I can't tell</button>
+                <button class="questionnaire-question-3 btn btn-answer btn-success" value='Done'><i class="fa fa-white"></i> Done</button>
+                <button class="questionnaire-question-3 btn btn-answer"             value='Uncertain'><i class="fa fa-white"></i> I can't tell</button>
             </div>
         </div>
-        <!-- End Step 3 -->
-        <!-- Step 4 -->
-        <div id="step_4" class="steps">
+        <!-- End question 3. -->
+        <!-- Question 4. -->
+        <div id="questionnaire-question-4" class="question">
             <h1>Check some of the indicators that suggest to you that the animal may be in bad health:</h1>
             <div class="row help_popup col-xs-13">
                 <i class="fa fa-exclamation-circle"></i>How do I answer this question? <a class="help_popup_a" href="javascript:void(0)">Get some help</a>
@@ -262,7 +273,7 @@
                     </div>
                 </div>
             </div>
-            <div id="step_4_answer">
+            <div id="questionnaire-question-4-answer">
                 <input type="checkbox" value="skinny"    ><label for="skinny">&nbsp;&nbsp;The animal looks skinny</label><br>
                 <input type="checkbox" value="underfed"  ><label for="underfed">&nbsp;&nbsp;I can see the animals ribs</label><br>
                 <input type="checkbox" value="fatigued"  ><label for="fatigued">&nbsp;&nbsp;The animal is lying down</label><br>
@@ -270,124 +281,79 @@
                 <input type="checkbox" value="despondent"><label for="despondent">&nbsp;&nbsp;The animal's head is hanging down, it does not look alert</label><br>
                 <input type="checkbox" value="alone"     ><label for="alone">&nbsp;&nbsp;The animal is alone or seperate from its herd</label><br>
 
-                <button class="step_4 btn btn-answer btn-success" value='Done'><i class="fa fa-white"></i> Done</button>
-                <button class="step_4 btn btn-answer"             value='Uncertain'><i class="fa fa-white"></i> I can't tell</button>
+                <button class="questionnaire-question-4 btn btn-answer btn-success" value='Done'><i class="fa fa-white"></i> Done</button>
+                <button class="questionnaire-question-4 btn btn-answer"             value='Uncertain'><i class="fa fa-white"></i> I can't tell</button>
             </div>
         </div>
-        <!-- End Step 4 -->
-        <!-- Last Step -->
-        <div id="last_step" class="steps">
-            <h1>Thanks! You have fully analyzed one picture</h1>
-            <div id="last_step_answer">
-                <button class="last_step btn btn-answer btn-large btn-success" value='Submit'>Save it and load another one</button>
-            </div>
+        <!-- End question 4. -->
+        <!-- End questions. -->
+
+
+        <!-- The questionnaire submission verification. -->
+        <div id="questionnaire-verify-submit" class="question">
+            <h1>Thanks! Your analysis is complete.</h1>
+            <p><strong>Please share your feedback! Get on <a target="_blank" href="https://github.com/geotagx/pybossa/issues">GitHub</a> or <a href="mailto:eleanor.rusack@unitar.org?Subject=GeoTag-X feedback" target="_top">send an email</a> if you prefer.</strong></p>
+            <div><button class="questionnaire-verify-submit btn btn-answer btn-large btn-success">Save it and load another one</button></div>
         </div>
-        <!-- End Last Step-->
-        <!-- End questionary -->
-        <div style="margin-top:5px;">
-            <button class="back btn btn-answer" style="display:none;"><i class="fa fa-chevron-left"></i> Go to previous step</button>
+        <div id="questionnaire-ui"><!-- Additional questionnaire user interface. -->
+            <button id="questionnaire-ui-rewind" class="btn" disabled="disabled"><i class="fa fa-fw fa-chevron-left"></i>Go to previous question</button>
+            <button id="questionnaire-ui-show-comments" class="btn btn-primary"><i class="fa fa-fw fa-comments-o"></i>Show comments</button>
         </div>
-    </div>
-
-
-
-	<link type="text/css" src="https://raw.githubusercontent.com/spMohanty/Magnifier.js/master/magnifier.css"/>
-	<div id="image" class="col-xs-6 affix-top"><!-- The image to analyze. -->
-		<div class="row">
-			<div class="col-xs-12" style="margin-top:10px;">
-				<a id="img_source" target="_blank" href="#" class="btn btn-primary">View Photo Source</a>
-				<br>
-				Hover over the image to zoom, use the mouse scroll wheel to zoom in and out (<a target="_blank" href="http://mark-rolich.github.io/Magnifier.js/">Magnifier.js</a>)
-			</div>
-			<div style="margin: 0 auto">
-				<a class="magnifier-thumb-wrapper demo col-xs-12">
-					<img style="width:100%" id="thumb" src="http://i.imgur.com/GeHxzb7.png">
-				</a>
-			</div>
-			<div class="magnifier-preview col-xs-12" style="height: 300px" id="preview"></div>
-		</div>
-	</div>
+        <div id="disqus_thread" class="col-xs-12"></div><!-- The comment thread container. -->
+    </section>
+  	<section id="image" class="col-xs-6 affix-top"><!-- The image to analyze. -->
+    	<div class="row">
+            <div class="col-xs-12"><p   id="image_loading"><strong>Loading ...</strong></p></div>
+            <div class="col-xs-12"><img id="image_content"></div>
+            <div class="col-xs-12"><p   id="image_caption">The original image was obtained from <strong><a id="image_src" target="_blank" href="#">here</a></strong>.</p><p id="image_wheelzoom_tooltip">Hover your mouse over the image and use the scroll wheel to zoom in and out.</p></div>
+    	</div>
+  	</section>
 </div>
-
-
-<!-- Success and Error Messages for the user -->
-<div class="row">
-	<div class="col-xs-6 col-xs-offset-2" style="height:50px">
-		<div id="success" class="alert alert-success" style="display:none;">
-			<a class="close">×</a>
-			<strong>Well done!</strong> Your answer has been saved
-		</div>
-        <div id="loading" class="alert alert-info" style="display:none;">
-            <a class="close">×</a>
-            Loading next task...
-        </div>
-        <div id="taskcompleted" class="alert alert-info" style="display:none;">
-            <strong>The task has been completed!</strong> Thanks a lot!
-        </div>
-		<div id="finish" class="alert alert-success" style="display:none;">
-			<strong>Congratulations!</strong> You have participated in all available tasks!
-			<br>
-			<div class="alert-actions">
-				<a class="btn small" href="/">Go back</a>
-				<a class="btn small" href="/app">or, Check other applications</a>
-			</div>
-		</div>
-		<div id="error" class="alert alert-error" style="display:none;">
-			<a class="close">×</a>
-			<strong>Error!</strong> Something went wrong, please contact the site administrators
-		</div>
-    </div>
-</div>
+<script src="/static/js/vendor/wheelzoom.js"></script>
 <script src="/static/js/pybossa/unosat.js"></script>
 <script src="/static/js/geotagx.js"></script>
-<script src="/static/js/pybossa/Event.js"></script>
-<script src="/static/js/pybossa/Magnifier.js"></script>
 <script>
-// Assigns a result field to a step number.
-geotagx.task.setResultMap({
+// Assign a result field to each question number and set the submission handler.
+geotagx.task.prepare({
     0:"animals",
     1:"animalSpecies",
     2:"animalAlive",
     3:"animalGoodHealthIndicators",
     4:"animalPoorHealthIndicators",
-});
-
-// Set the result submission handler.
-geotagx.task.onSubmitResult = function(submission, $submitter){
-    var currentStep = geotagx.task.currentStep();
-    switch (currentStep){
+}, function(question, result, $submitter){
+    switch (question){
         case 0: // Determine whether or not there're domestic animals in the image.
         case 2: // Determine whether or not the animal is alive.
-            geotagx.task.saveResult(submission);
-            if (submission === "Yes")
-                geotagx.task.showNextStep();
+            geotagx.task.save(result);
+            if (result === "Yes")
+                geotagx.task.showNextQuestion();
             else
-                geotagx.task.showLastStep(); // If the image doesn't contain any animals that are domestic or alive, skip to the last step.
+                geotagx.task.showLastQuestion(); // If the image doesn't contain any animals that are domestic or alive, skip to the last question.
             break;
         case 1:
-            // For this step, we can have a listed or unlisted answer. In the latter case, the answer is
+            // For this question, we can have a listed or unlisted answer. In the latter case, the answer is
             // stored in the 'animal_other' input field and not as the button value.
             if ($submitter.attr("id") === "animal_other_button")
-                submission = $("#animal_other").val().trim();
+                result = $("#animal_other").val().trim();
 
-            // Only store a valid answer.
-            if (!!submission){
-                geotagx.task.saveResult(submission);
-                geotagx.task.showNextStep();
+            // Only store a valid result.
+            if (!!result){
+                geotagx.task.save(result);
+                geotagx.task.showNextQuestion();
             }
             break;
         case 3: // Determine indicators of good health.
         case 4: // Determine indicators of poor health.
-            if (submission === "Done")
-                submission = geotagx.util.inputsToString($submitter.siblings("input:checked"));
+            if (result === "Done")
+                result = geotagx.util.inputsToString($submitter.siblings("input:checked"));
 
-            geotagx.task.saveResult(submission);
-            geotagx.task.showNextStep();
+            geotagx.task.save(result);
+            geotagx.task.showNextQuestion();
             break;
         default:
             break;
     }
-};
+});
 
 // Run the application.
 geotagx.task.run("animals", "animals");
