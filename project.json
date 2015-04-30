@@ -1,0 +1,162 @@
+{
+	"name":"Condition of animals and livestock",
+	"short_name":"animals",
+	"category":"Somali Drought",
+	"description":"Identify animals and report on their condition.",
+	"why":"This project investigates how we could extract information on the effects of drought on animals.",
+	"questions":[
+		{
+			"id":1,
+			"title":"Do you see domestic animals in this photo?",
+			"type":"binary",
+			"answer":{
+				"saved_as":"animals"
+			},
+			"branch":[
+				{"no":"finish"}
+			]
+		},
+		{
+			"id":2,
+			"title":"What is the animal you are looking at?",
+			"type":"illustrated_multiple_choice",
+			"answer":{
+				"saved_as":"animalSpecies",
+				"choices":[
+					{
+						"label":"Cattle",
+						"value":"Cattle",
+						"illustration":{
+							"image":"http://www.interservicos.com/media/uploads/3n.png",
+							"source":{
+								"name":"Interservicos",
+								"url":"http://www.interservicos.com/index.php/en/projectos/detail/306/"
+							}
+						},
+						"more_examples":"https://www.google.com/#q=cattle+africa"
+					},
+					{
+						"label":"Camel",
+						"value":"Camel",
+						"illustration":{
+							"image":"http://www.animalcorner.co.uk/wildlife/camels/graphics/cameldrom.jpg",
+							"source":{
+								"name":"Animal Corner",
+								"url":"http://www.animalcorner.co.uk/wildlife/camels/camel_dromedary.html"
+							}
+						},
+						"more_examples":"https://www.google.com/#q=camel"
+					},
+					{
+						"label":"Horse",
+						"value":"Horse",
+						"illustration":{
+							"image":"http://40.media.tumblr.com/cf2d20197662f0a7f92bab14eb172f5e/tumblr_muk62bEGmk1r34z06o1_1280.jpg",
+							"source":{
+								"name":"Our Africa Blog",
+								"url":"http://www.ourafricablog.com/post/63820121729/nomadamsterdam-somali-horses-having-fun-at"
+							}
+						},
+						"more_examples":"https://www.google.com/#q=horse"
+					},
+					{
+						"label":"Sheep",
+						"value":"Sheep",
+						"illustration":{
+							"image":"http://media-cache-ec0.pinimg.com/236x/cd/44/16/cd44162bd06893707689624f33314daf.jpg",
+							"source":{
+								"name":"colouredsheep.org.nz",
+								"url":"http://www.colouredsheep.org.nz/"
+							}
+						},
+						"more_examples":"https://www.google.com/#q=sheep+africa"
+					},
+					{
+						"label":"Donkey",
+						"value":"Donkey",
+						"illustration":{
+							"image":"http://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Innocence_%283426318415%29.jpg/301px-Innocence_%283426318415%29.jpg",
+							"source":{
+								"name":"Innocence",
+								"url":"http://www.flickr.com/photos/adavey/3426318415/"
+							}
+						},
+						"more_examples":"https://www.google.com/#q=donkey"
+					},
+					{
+						"label":"Goat",
+						"value":"Goat",
+						"illustration":{
+							"image":"http://capda.org.au/wp-content/uploads/2013/10/DSC09840-960x640.jpg",
+							"source":{
+								"name":"CAPDA",
+								"url":"http://capda.org.au/goat-and-chicken-raising-projects/"
+							}
+						},
+						"more_examples":"https://www.google.com/#q=goat"
+					},
+					{
+						"label":"Oxen",
+						"value":"Oxen",
+						"illustration":{
+							"image":"http://markwatkinson.zenfolio.com/img/s3/v40/p357350409-3.jpg",
+							"source":{
+								"name":"Mark W. Atkinson",
+								"url":"http://markwatkinson.zenfolio.com/p709151464/h154CBC09#h154cbc09"
+							}
+						},
+						"more_examples":"https://www.google.com/#q=ox"
+					}
+				]
+			}
+		},
+		{
+			"id":3,
+			"title":"Is the animal alive or dead?",
+			"type":"multiple_choice",
+			"answer":{
+				"saved_as":"animalAlive",
+				"choices":[
+					{"Alive":"Alive"},
+					{"Dead":"Dead"}
+				]
+			},
+			"branch":[
+				{"Dead":"finish"}
+			]
+		},
+		{
+			"id":4,
+			"title":"Do you see any indicators of good health?",
+			"type":"multiple_choice",
+			"answer":{
+				"saved_as":"animalGoodHealthIndicators",
+				"choices":[
+					{"Playing":"The animal is running and/or playing"},
+					{"Eating":"The animal is eating and/or drinking"},
+					{"Grooming":"The animal is grooming itself"},
+					{"Nursing":"The animal is nursing its baby"},
+					{"Herded":"The animal is within a herd"},
+					{"Alert":"The animal has bright eyes, its head is up and it looks alert"},
+					{"Moving":"The animal is moving away from or approaching a person"}
+				]
+			}
+		},
+		{
+			"id":5,
+			"title":"What about indicators of poor health?",
+			"type":"multiple_choice",
+			"answer":{
+				"saved_as":"animalPoorHealthIndicators",
+				"choices":[
+					{"Skinny":"The animal looks skinny"},
+					{"Underfed":"I can see the animals ribs"},
+					{"Fatigued":"The animal is lying down"},
+					{"Ungroomed":"The animal's fur is lank, un-groomed, and maybe patchy in some places"},
+					{"Despondent":"The animal's head is hanging down, it does not look alert"},
+					{"Alone":"The animal is alone or seperate from its herd"}
+				]
+			}
+		}
+	]
+}
