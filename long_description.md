@@ -13,7 +13,7 @@ You can **[take the tutorial](http://geotagx.org/project/animals_tutorial/newtas
 
 **Don't worry if you are not sure about your answer**, each photo is presented to at least 30 people and the final answers are taken from the majority response.
 
-**If you can't see what is in the photo** select "I DON'T KNOW" - this is a good answer!
+**If you can't see what is in the photo** select "I DON'T KNOW" - this is a good	 answer!
 
 **Don't worry if several photos seem irrelevant**, sometimes you might click through several photos before finding one you can analyse. The same photos are presented in multiple projects on topics such as agriculture, soil and water. While a photo may not be relevant for this analysis, it may be relevant to another.
 
