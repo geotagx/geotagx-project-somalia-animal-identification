@@ -1,0 +1,55 @@
+{
+	"tutorial":[
+		{
+			"image":"http://resources3.news.com.au/images/2013/05/24/1226650/215811-130525-luke-mcnevin.jpg",
+			"image_source":"http://www.theaustralian.com.au/news/nation/spared-slaughter-overseas-only-to-meet-cruel-death-in-a-parched-land/story-e6frg6nf-1226650217008",
+			"assertions":{
+				"1":{
+					"expects":"yes",
+					"default_message":"Try again. If you are not sure what to look for, check out the help for more information.",
+					"messages":{
+						"yes":"Well done! There is a domestic animal in this photo.",
+						"no":"Are you sure there is no animal? Check out the help for information on what you should be looking for."
+					}
+				},
+				"2":{
+					"expects":"cattle",
+					"default_message":"Try again. Look at the context of the photo, maybe there are hints in the page the photo came from.",
+					"messages":{
+						"cattle":"Correct! You are looking at a cow which is classified as cattle.",
+						"unknown":"Try again. If you are not sure what to look for, check out the help for more information.",
+						"notclear":"Try again. If you are not sure what to look for, check out the help for more information."
+					}
+				},
+				"3":{
+					"expects":"alive",
+					"default_message":"Try again. If you are not sure what to look for, check out the help for more information.",
+					"messages":{
+						"alive":"Well done! The animal in this photo is alive.",
+						"dead":"Are you sure the animal is not alive? Is it sitting up and looking around?"
+					}
+				},
+				"4":{
+					"expects":"none",
+					"default_message":"Do you really see these signs of good health? If you are not sure what to look for, check out the help for more information.",
+					"messages":{
+						"none":"Correct! The animal in this photo does not look like it's in good health.",
+						"unknown":"Try again. If you are not sure what to look for, check out the help for more information.",
+						"notclear":"Try again. If you are not sure what to look for, check out the help for more information."
+					}
+				},
+				"5":{
+					"expects":"skinny, underfed, fatigued, ungroomed, alone",
+					"default_message":"Is that all you see?",
+					"messages":{
+						"skinny, underfed, fatigued, ungroomed, alone":"Correct! The animal in this photo does not look like it's in good health.",
+						"skinny, underfed, fatigued, ungroomed, despondent, alone":"Are you sure you see all these signs of poor health?",
+						"despondent":"Are you sure the animal's head is hanging down? If you are not sure what to look for, check out the help for more information.",
+						"unknown":"Try again. If you are not sure what to look for, check out the help for more information.",
+						"notclear":"Try again. If you are not sure what to look for, check out the help for more information."
+					}
+				}
+			}
+		}
+	]
+}
