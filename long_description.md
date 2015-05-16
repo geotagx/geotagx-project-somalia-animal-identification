@@ -9,11 +9,9 @@ We want to answer questions like:
 ### How does it work?
 You will be presented with an image from drought in Somalia and asked a series of questions about what you see in the photo.
 
-You can **[take the tutorial](http://geotagx.org/project/animals_tutorial/newtask)** before starting so you know what to look for.
-
 **Don't worry if you are not sure about your answer**, each photo is presented to at least 30 people and the final answers are taken from the majority response.
 
-**If you can't see what is in the photo** select "I DON'T KNOW" - this is a good	 answer!
+**If you can't see what is in the photo** select "I DON'T KNOW" - this is a good answer!
 
 **Don't worry if several photos seem irrelevant**, sometimes you might click through several photos before finding one you can analyse. The same photos are presented in multiple projects on topics such as agriculture, soil and water. While a photo may not be relevant for this analysis, it may be relevant to another.
 
@@ -27,4 +25,4 @@ This project was co-developed with [Ilya Fischhoff](https://www.linkedin.com/pro
 
 The icon image, and images within this project, come from [FAO SWALIM](http://www.faoswalim.org/) on [Flickr](https://secure.flickr.com/photos/faoswalim/sets/72157642992734333/).
 
-This page was last updated 30 April, 2015.
+This page was last updated 16 May, 2015.
