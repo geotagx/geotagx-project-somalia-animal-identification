@@ -4,7 +4,7 @@
 			"image":"http://resources3.news.com.au/images/2013/05/24/1226650/215811-130525-luke-mcnevin.jpg",
 			"image_source":"http://www.theaustralian.com.au/news/nation/spared-slaughter-overseas-only-to-meet-cruel-death-in-a-parched-land/story-e6frg6nf-1226650217008",
 			"assertions":{
-				"1":{
+				"animals":{
 					"expects":"yes",
 					"default_message":"Try again. If you are not sure what to look for, check out the help for more information.",
 					"messages":{
@@ -12,7 +12,7 @@
 						"no":"Are you sure there is no animal? Check out the help for information on what you should be looking for."
 					}
 				},
-				"2":{
+				"animalSpecies":{
 					"expects":"cattle",
 					"default_message":"Try again. Look at the context of the photo, maybe there are hints in the page the photo came from.",
 					"messages":{
@@ -21,7 +21,7 @@
 						"notclear":"Try again. If you are not sure what to look for, check out the help for more information."
 					}
 				},
-				"3":{
+				"animalAlive":{
 					"expects":"alive",
 					"default_message":"Try again. If you are not sure what to look for, check out the help for more information.",
 					"messages":{
@@ -29,7 +29,7 @@
 						"dead":"Are you sure the animal is not alive? Is it sitting up and looking around?"
 					}
 				},
-				"4":{
+				"animalGoodHealthIndicators":{
 					"expects":"none",
 					"default_message":"Do you really see these signs of good health? If you are not sure what to look for, check out the help for more information.",
 					"messages":{
@@ -38,7 +38,7 @@
 						"notclear":"Try again. If you are not sure what to look for, check out the help for more information."
 					}
 				},
-				"5":{
+				"animalPoorHealthIndicators":{
 					"expects":"skinny, underfed, fatigued, ungroomed, alone",
 					"default_message":"Is that all you see?",
 					"messages":{

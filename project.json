@@ -4,25 +4,21 @@
 	"category":"Somali Drought",
 	"description":"Identify animals and report on their condition.",
 	"why":"This project investigates how we could extract information on the effects of drought on animals.",
-	"questions":[
+	"questionnaire":[
 		{
-			"id":1,
-			"title":"Do you see domestic animals in this photo?",
+			"question":"Do you see domestic animals in this photo?",
+			"key":"animals",
 			"type":"binary",
-			"answer":{
-				"saved_as":"animals"
-			},
-			"branch":[
-				{"no":"finish"}
-			]
+			"branch":{
+				"no":"end"
+			}
 		},
 		{
-			"id":2,
-			"title":"What is the animal you are looking at?",
-			"type":"illustrated_multiple_choice",
-			"answer":{
-				"saved_as":"animalSpecies",
-				"choices":[
+			"question":"What is the animal you are looking at?",
+			"key":"animalSpecies",
+			"type":"illustrative-checklist",
+			"parameters":{
+				"options":[
 					{
 						"label":"Cattle",
 						"value":"Cattle",
@@ -111,50 +107,92 @@
 			}
 		},
 		{
-			"id":3,
-			"title":"Is the animal alive or dead?",
-			"type":"multiple_choice",
-			"answer":{
-				"saved_as":"animalAlive",
-				"choices":[
-					{"Alive":"Alive"},
-					{"Dead":"Dead"}
+			"question":"Is the animal alive or dead?",
+			"key":"animalAlive",
+			"type":"checklist",
+			"parameters":{
+				"options":[
+					{
+						"label":"Alive",
+						"value":"Alive"
+					},
+					{
+						"label":"Dead",
+						"value":"Dead"
+					}
 				]
 			},
-			"branch":[
-				{"Dead":"finish"}
-			]
+			"branch":{
+				"Dead":"end"
+			}
 		},
 		{
-			"id":4,
-			"title":"Do you see any indicators of good health?",
-			"type":"multiple_choice",
-			"answer":{
-				"saved_as":"animalGoodHealthIndicators",
-				"choices":[
-					{"Playing":"The animal is running and/or playing"},
-					{"Eating":"The animal is eating and/or drinking"},
-					{"Grooming":"The animal is grooming itself"},
-					{"Nursing":"The animal is nursing its baby"},
-					{"Herded":"The animal is within a herd"},
-					{"Alert":"The animal has bright eyes, its head is up and it looks alert"},
-					{"Moving":"The animal is moving away from or approaching a person"}
+			"question":"Do you see any indicators of good health?",
+			"key":"animalGoodHealthIndicators",
+			"type":"checklist",
+			"parameters":{
+				"options":[
+					{
+						"label":"The animal is running and/or playing",
+						"value":"Playing"
+					},
+					{
+						"label":"The animal is eating and/or drinking",
+						"value":"Eating"
+					},
+					{
+						"label":"The animal is grooming itself",
+						"value":"Grooming"
+					},
+					{
+						"label":"The animal is nursing its baby",
+						"value":"Nursing"
+					},
+					{
+						"label":"The animal is within a herd",
+						"value":"Herded"
+					},
+					{
+						"label":"The animal has bright eyes, its head is up and it looks alert",
+						"value":"Alert"
+					},
+					{
+						"label":"The animal is moving away from or approaching a person",
+						"value":"Moving"
+					}
 				]
 			}
 		},
 		{
-			"id":5,
-			"title":"What about indicators of poor health?",
-			"type":"multiple_choice",
-			"answer":{
-				"saved_as":"animalPoorHealthIndicators",
-				"choices":[
-					{"Skinny":"The animal looks skinny"},
-					{"Underfed":"I can see the animals ribs"},
-					{"Fatigued":"The animal is lying down"},
-					{"Ungroomed":"The animal's fur is lank, un-groomed, and maybe patchy in some places"},
-					{"Despondent":"The animal's head is hanging down, it does not look alert"},
-					{"Alone":"The animal is alone or seperate from its herd"}
+			"question":"What about indicators of poor health?",
+			"key":"animalPoorHealthIndicators",
+			"type":"checklist",
+			"parameters":{
+				"options":[
+					{
+						"label":"The animal looks skinny",
+						"value":"Skinny"
+					},
+					{
+						"label":"I can see the animals ribs",
+						"value":"Underfed"
+					},
+					{
+						"label":"The animal is lying down",
+						"value":"Fatigued"
+					},
+					{
+						"label":"The animal's fur is lank, un-groomed, and maybe patchy in some places",
+						"value":"Ungroomed"
+					},
+					{
+						"label":"The animal's head is hanging down, it does not look alert",
+						"value":"Despondent"
+					},
+					{
+						"label":"The animal is alone or seperate from its herd",
+						"value":"Alone"
+					}
 				]
 			}
 		}
